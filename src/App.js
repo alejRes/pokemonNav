@@ -1,25 +1,30 @@
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
+import { BrowserRouter } from 'react-router-dom'
+import { pokeContext } from './context/pokeContext';
+import Main from './components/Main/Main'
+import Header from './components/Header/Header'
 
-function App() {
+const App = ()=> {
+  const [pokelist, setPokeList] = useState([])
+
+  const pushPokemon = (pokemon)=> setPokeList([...pokelist,pokemon])
+ 
+  const value = {
+    List: pokelist,
+    insertPokemon: pushPokemon
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <pokeContext.Provider value={value}>
+          <Header/>
+          <Main/>
+        </pokeContext.Provider>
+      </BrowserRouter>
     </div>
   );
 }
 
-export default App;
+export default App
